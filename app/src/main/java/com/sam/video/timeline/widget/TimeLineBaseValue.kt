@@ -79,7 +79,7 @@ class TimeLineBaseValue {
     fun resetStandPxInSecond(holdPxInSecond: Boolean = false) {
 
         //默认 65dp = 1s
-        standPxInSecond = App.instance.dp2px(65f)
+        standPxInSecond = App.instance.dp2px(PX_IN_SECOND)
         //单段视频是一帧宽48dp 多段视频
         val frameTime = frameWidth * 1000 / standPxInSecond
 
@@ -94,7 +94,7 @@ class TimeLineBaseValue {
         }
     }
 
-    private val frameWidth = App.instance.dp2px(48f)
+    private val frameWidth = App.instance.dp2px(FRAME_WIDTH)
     private val screenWidth = App.instance.getScreenWidth()
 
     /**
@@ -137,6 +137,12 @@ class TimeLineBaseValue {
          * 视频片段最小时间
          */
         const val MIN_CLIP_TIME = 100L
+
+
+        const val FRAME_WIDTH: Float = 26f
+
+        // 每秒视频对应的长度，
+        const val PX_IN_SECOND: Float = FRAME_WIDTH
     }
 
 }

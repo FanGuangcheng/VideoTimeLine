@@ -14,6 +14,7 @@ import com.sam.video.timeline.adapter.VideoFrameAdapter
 import com.sam.video.timeline.bean.VideoClip
 import com.sam.video.timeline.bean.VideoFrameData
 import com.sam.video.timeline.listener.OnFrameClickListener
+import com.sam.video.timeline.widget.TimeLineBaseValue.Companion.FRAME_WIDTH
 import com.sam.video.util.dp2px
 import kotlin.math.min
 
@@ -32,7 +33,7 @@ class VideoFrameRecyclerView @JvmOverloads constructor(
     var videoData: List<VideoClip>? = null
     /** 帧数据 */
     val listData = mutableListOf<VideoFrameData>()
-    private val frameWidth by lazy(LazyThreadSafetyMode.NONE) { context.dp2px(48f).toInt() }
+    private val frameWidth by lazy(LazyThreadSafetyMode.NONE) { context.dp2px(FRAME_WIDTH).toInt() }
     private val decorationWidth by lazy(LazyThreadSafetyMode.NONE) { context.dp2px(2f).toInt() }
     val halfDurationSpace = decorationWidth / 2
     private val videoFrameItemDecoration: VideoFrameItemDecoration
