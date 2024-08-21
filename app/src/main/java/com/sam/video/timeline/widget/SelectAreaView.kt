@@ -52,18 +52,21 @@ class SelectAreaView @JvmOverloads constructor(
     var offsetEnd = 0
 
     private val cursorWidth = context.dp2px(14f)
-    private val selectAreaHeight = context.dp2px(48f)
+    private val selectAreaHeight = context.dp2px(56f)
 
     private val textMarginRight = context.dp2px(2f) //选区时间的右间距
 
     private val paintBg = Paint(Paint.ANTI_ALIAS_FLAG)
-    private val selectBgColor = context.color(R.color.video_blue_50) //选择区域色
-    private val unSelectBgColor = ContextCompat.getColor(context, R.color.black30) //未选择的区域色
-    private val unSelectBgPaddingTop = context.dp2px(6f)
+//    private val selectBgColor = context.color(R.color.video_blue_50) //选择区域色
+    private val selectBgColor = context.color(R.color.watermelon_20) //选择区域色
+//    private val unSelectBgColor = ContextCompat.getColor(context, R.color.black30) //未选择的区域色
+    private val unSelectBgColor = ContextCompat.getColor(context, R.color.watermelon_30) //未选择的区域色
+    private val unSelectBgPaddingTop = context.dp2px(0f)
 
     //size: 18*48dp
-    private val leftDrawable = context.resources.getDrawable(R.drawable.video_select_left)
-    private val rightDrawable = context.resources.getDrawable(R.drawable.video_select_right)
+    private val leftDrawable = context.resources.getDrawable(R.drawable.zmg_select_left)
+    private val rightDrawable = context.resources.getDrawable(R.drawable.zmg_select_right)
+    private val middleDrawable = context.resources.getDrawable(R.drawable.zmg_select_middle)
 
     val eventHandle = SelectAreaEventHandle(context)
     var onChangeListener: OnChangeListener? = null
@@ -141,10 +144,15 @@ class SelectAreaView @JvmOverloads constructor(
         endTimeX = timeX - offsetEnd + endTimeInPx - timeInPx
 
         //中
-        paintBg.color = selectBgColor
-        canvas.drawRect(startTimeX, (height - selectAreaHeight) / 2 , endTimeX, (height + selectAreaHeight) / 2 , paintBg)
+//        paintBg.color = selectBgColor
+//        canvas.drawRect(startTimeX, (height - selectAreaHeight) / 2 , endTimeX, (height + selectAreaHeight) / 2 , paintBg)
 
-        leftDrawable.setBounds((startTimeX - cursorWidth).toInt(), 0, startTimeX.toInt(), height)
+
+        middleDrawable.setBounds(startTimeX.toInt(), ((height - selectAreaHeight) / 2).toInt() , endTimeX.toInt(), ((height + selectAreaHeight) / 2).toInt())
+        middleDrawable.draw(canvas)
+
+        // 左右选区的上下边距都增加1，不知道为什么 点九图和切图对不齐
+        leftDrawable.setBounds((startTimeX - cursorWidth).toInt(), 1 + ((height - selectAreaHeight) / 2).toInt(), startTimeX.toInt(), ((height + selectAreaHeight) / 2).toInt() - 1)
         leftDrawable.draw(canvas)
 
         //时间
@@ -158,7 +166,8 @@ class SelectAreaView @JvmOverloads constructor(
         // 右
         paintBg.color = unSelectBgColor
         canvas.drawRect(endTimeX, unSelectBgPaddingTop, width.toFloat(), height.toFloat(), paintBg)
-        rightDrawable.setBounds(endTimeX.toInt(), 0, (endTimeX + cursorWidth).toInt(), height)
+        // 左右选区的上下边距都增加1，不知道为什么 点九图和切图对不齐
+        rightDrawable.setBounds(endTimeX.toInt(), 1 + ((height - selectAreaHeight) / 2).toInt(), (endTimeX + cursorWidth).toInt(), ((height + selectAreaHeight) / 2).toInt() - 1)
         rightDrawable.draw(canvas)
 
         canvas.restore()

@@ -30,7 +30,7 @@
         <com.sam.video.timeline.widget.SelectAreaView
             android:id="@+id/selectAreaView"
             android:layout_width="match_parent"
-            android:layout_height="72dp"
+            android:layout_height="56dp"
             android:layout_gravity="center_vertical"
             android:visibility="gone"
             tools:visibility="visible"
