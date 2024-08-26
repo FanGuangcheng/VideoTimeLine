@@ -401,33 +401,43 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
     var startTime: Long = 0
     private fun removeLastVideo() {
-
-        //        if (videos.size > 0) {
-//            videos.removeAt(videos.size - 1)
-//        }
-//        updateVideos()
-
-//        rvFrame.scrollTo(100, 0)
-
-        // todo fgc 假设要滚动到x轴200的位置
-        val current = rvFrame.computeHorizontalScrollOffset();
-
-        if (current == 0) {
-            rvFrame.postDelayed({
-                removeLastVideo()
-            }, 100)
+        if (timeLineValue.time >= timeLineValue.duration) {
+            Log.d("fgcfgc", "just return ~~!")
             return
         }
 
+
+        val current = rvFrame.computeHorizontalScrollOffset();
+        Log.d("fgcfgc", "current: $current")
         rvFrame.postDelayed({
+            Log.d("fgcfgc", "timeLineValue.time: " + timeLineValue.time)
 
-            var currentLength = timeLineValue.time2px((System.currentTimeMillis() - startTime)).toInt()
-            Log.d("fgcfgc", "current: $current, currentLength: $currentLength, : time:" + (System.currentTimeMillis() - startTime))
-
-
-            rvFrame.smoothScrollBy(currentLength - current, 0)
+            timeLineValue.time += 30
+            // todo fgc 进度条通知的频率改为50ms，就比较刘畅，播放器可以将频率改一下
+            zoomFrameLayout.updateTimeByScroll(timeLineValue.time)
+//            rvFrame.smoothScrollBy(timeLineValue.time2px(100).toInt(), 0)
             removeLastVideo()
-        }, 100)
+        }, 30)
+
+        // todo fgc 假设要滚动到x轴200的位置
+//        val current = rvFrame.computeHorizontalScrollOffset();
+//
+//        if (current == 0) {
+//            rvFrame.postDelayed({
+//                removeLastVideo()
+//            }, 100)
+//            return
+//        }
+//
+//        rvFrame.postDelayed({
+//
+//            var currentLength = timeLineValue.time2px((System.currentTimeMillis() - startTime)).toInt()
+//            Log.d("fgcfgc", "current: $current, currentLength: $currentLength, : time:" + (System.currentTimeMillis() - startTime))
+//
+//
+//            rvFrame.smoothScrollBy(currentLength - current, 0)
+//            removeLastVideo()
+//        }, 100)
 
 
 
