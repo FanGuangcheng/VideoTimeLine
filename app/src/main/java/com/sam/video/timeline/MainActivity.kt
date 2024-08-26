@@ -6,6 +6,7 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.provider.MediaStore
+import android.util.Log
 import android.view.MotionEvent
 import android.view.ScaleGestureDetector
 import android.view.View
@@ -365,7 +366,10 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     override fun onClick(v: View?) {
         when (v) {
             tvAddVideo -> startGetVideoIntent()
-            ivRemove -> removeLastVideo()
+            ivRemove -> {
+                startTime = System.currentTimeMillis()
+                removeLastVideo()
+            }
             tvAddTag -> addTagClick()
             zoomFrameLayout -> clearTagSelect()
         }
@@ -395,11 +399,69 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         startActivityForResult(chooserIntent, Constants.REQUEST_VIDEO)
     }
 
+    var startTime: Long = 0
     private fun removeLastVideo() {
-        if (videos.size > 0) {
+
+        //        if (videos.size > 0) {
+//            videos.removeAt(videos.size - 1)
+//        }
+//        updateVideos()
+
+//        rvFrame.scrollTo(100, 0)
+
+        // todo fgc 假设要滚动到x轴200的位置
+        val current = rvFrame.computeHorizontalScrollOffset();
+
+        if (current == 0) {
+            rvFrame.postDelayed({
+                removeLastVideo()
+            }, 100)
+            return
+        }
+
+        rvFrame.postDelayed({
+
+            var currentLength = timeLineValue.time2px((System.currentTimeMillis() - startTime)).toInt()
+            Log.d("fgcfgc", "current: $current, currentLength: $currentLength, : time:" + (System.currentTimeMillis() - startTime))
+
+
+            rvFrame.smoothScrollBy(currentLength - current, 0)
+            removeLastVideo()
+        }, 100)
+
+
+
+
+        
+/*        if (videos.size > 0) {
             videos.removeAt(videos.size - 1)
         }
-        updateVideos()
+        updateVideos()*/
+
+
+
+//
+////        rvFrame.scrollTo(100, 0)
+//
+//        // todo fgc 假设要滚动到x轴200的位置
+//        val current = rvFrame.computeHorizontalScrollOffset();
+//        rvFrame.computeHorizontalScrollOffset()
+//        var totalLength = timeLineValue.time2px(timeLineValue.duration)
+//        var stepLength = timeLineValue.time2px(timeLineValue.duration) / 100
+//
+//        if ((System.currentTimeMillis() - startTime) >= timeLineValue.duration) {
+//            Log.d("fgcfgc", "just return~!")
+//            return
+//        }
+//
+//        rvFrame.postDelayed({
+//            Log.d("fgcfgc", "currentLength: $startTime")
+//
+//            rvFrame.smoothScrollBy(timeLineValue.px2time((System.currentTimeMillis() - lastTime).toFloat()).toInt(), 0)
+//            removeLastVideo()
+//            lastTime = System.currentTimeMillis()
+//        }, 100)
+////        rvFrame.smoothScrollBy(200 - current, 0)
     }
 
 
