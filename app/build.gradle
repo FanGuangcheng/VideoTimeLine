@@ -1,8 +1,7 @@
 apply plugin: 'com.android.application'
 
 apply plugin: 'kotlin-android'
-
-apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
 
 android {
     compileSdkVersion 28
@@ -19,6 +18,10 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
+    }
+    buildFeatures {
+        viewBinding true
+        dataBinding true
     }
     compileOptions {
         sourceCompatibility = 1.8
@@ -49,6 +52,7 @@ dependencies {
     annotationProcessor "com.github.bumptech.glide:compiler:$glideVersion"
     api 'androidx.annotation:annotation:1.1.0@jar'
     api 'com.google.android:flexbox:1.0.0'
-
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3' // 最新稳定版本
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3' // 用于 Android 的协程支持
 
 }

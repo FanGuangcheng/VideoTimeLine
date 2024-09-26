@@ -17,4 +17,8 @@ data class VideoClip(
         get() {
             return endAtMs - startAtMs
         }
+
+    override fun toString(): String {
+        return "VideoClip(id='$id', originalFilePath='$originalFilePath', originalDurationMs=$originalDurationMs, startAtMs=$startAtMs, endAtMs=$endAtMs)"
+    }
 }

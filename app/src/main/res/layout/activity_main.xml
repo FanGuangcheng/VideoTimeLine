@@ -50,6 +50,13 @@
             android:layout_gravity="center_vertical"
             android:layout_marginBottom="40dp" />
 
+        <com.sam.video.timeline.widget.SelectTimeView
+            android:id="@+id/timeView"
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginBottom="60dp" />
+
 
         <com.sam.video.timeline.widget.TagLineView
             android:id="@+id/tagView"
